@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function CompletedTodoList(props) {
-  const { todoLists, backToTodoListsHandler } = props;
+  const { todoLists, backToTodoListsHandler, deleteCompletedTodoHandler } =
+    props;
   const [showTodo, setShowTodo] = useState(false);
   const naviagte = useNavigate();
   const todoHandler = (todo) => {
@@ -10,7 +11,10 @@ export default function CompletedTodoList(props) {
   };
   const todoListsElement = todoLists.map((todo) => {
     return (
-      <div key={todo.id} className="flex items-center  mv1 pa2  bb b--black-10">
+      <div
+        key={todo.id}
+        className="flex items-center todo-list-item mv2 pa2 br3 bg-moon-gray pa2  bb b--black-10"
+      >
         <div>
           <input
             className="pointer"
@@ -28,6 +32,12 @@ export default function CompletedTodoList(props) {
           <div className="mt1  f5  monaco strike">
             Assignee : {todo.todo.assignTo}
           </div>
+        </div>
+        <div
+          className="trash-icon"
+          onClick={() => deleteCompletedTodoHandler(todo.id)}
+        >
+          <i class="fa-solid fa-trash-can"></i>
         </div>
       </div>
     );
@@ -51,7 +61,11 @@ export default function CompletedTodoList(props) {
             ></i>
           )}
         </div>
-        <div className={showTodo && "todo-list todo-list-active"}>
+        <div
+          className={
+            todoLists.length > 0 && showTodo && "todo-list todo-list-active"
+          }
+        >
           {showTodo && todoListsElement}
         </div>
       </div>

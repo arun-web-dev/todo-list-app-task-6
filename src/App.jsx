@@ -3,15 +3,20 @@ import NewTodo from "./Todo Components/NewTodo";
 import { useState, useEffect } from "react";
 import TodoList from "./Todo Components/TodoList";
 import { v4 as uuidV4 } from "uuid";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import {
+  Route,
+  BrowserRouter as Router,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import CompletedTodoList from "./Todo Components/CompletedTodoList";
 import Navigation from "./Todo Components/Navigation";
 import SignIn from "./Todo Components/SignIn";
+import ProtectedRoutes from "./Todo Components/ProtectedRoutes";
 
 function App() {
   const TODO_LISTS_STORAGE_KEY = "todoLists";
   const COMPLETED_LISTS_STORAGE_KEY = "completedTodos";
-  const [isSignedIn, setIsSignedIn] = useState(true);
   const [todoLists, setTodoLists] = useState([]);
   const [completedTodo, setCompletedTodo] = useState([]);
 
@@ -48,6 +53,12 @@ function App() {
       setCompletedTodo([...completedTodo, ...completedTodoList]);
   };
 
+  const deleteCompletedTodoHandler = (id) => {
+    console.log(id);
+    const filteredTodo = completedTodo.filter((todo) => todo.id !== id);
+    setCompletedTodo(filteredTodo);
+  };
+
   const backToTodoListsHandler = (id) => {
     const newTodo = completedTodo.filter((todo) => todo.id !== id.id);
     setCompletedTodo(newTodo);
@@ -59,35 +70,46 @@ function App() {
     setIsSignedIn(value);
   };
 
+  const protectedRouteHandler = () => {
+    const authenticated =
+      localStorage.getItem("authenticated")?.toString() === "true";
+    if (!authenticated) {
+      return <SignIn />;
+    } else {
+      return (
+        <>
+          <Navigation navigationHandler={navigationHandler} />
+          <Header />
+          <TodoList
+            todoLists={todoLists}
+            completedTodoHandler={completedTodoHandler}
+          />
+          <CompletedTodoList
+            todoLists={completedTodo}
+            backToTodoListsHandler={backToTodoListsHandler}
+            deleteCompletedTodoHandler={deleteCompletedTodoHandler}
+          />
+        </>
+      );
+    }
+  };
+  const newTodoRouteHandler = () => {
+    const authenticated =
+      localStorage.getItem("authenticated")?.toString() === "true";
+    if (!authenticated) {
+      return <SignIn />;
+    } else {
+      return <NewTodo toDosHandler={toDosHandler} />;
+    }
+  };
+
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route
-            path="/"
-            element={
-              isSignedIn ? (
-                <SignIn navigationHandler={navigationHandler} />
-              ) : (
-                <>
-                  <Navigation navigationHandler={navigationHandler} />
-                  <Header />
-                  <TodoList
-                    todoLists={todoLists}
-                    completedTodoHandler={completedTodoHandler}
-                  />
-                  <CompletedTodoList
-                    todoLists={completedTodo}
-                    backToTodoListsHandler={backToTodoListsHandler}
-                  />
-                </>
-              )
-            }
-          />
-          <Route
-            path="/newTodo"
-            element={<NewTodo toDosHandler={toDosHandler} />}
-          />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/" element={protectedRouteHandler()} />
+          <Route path="/newTodo" element={newTodoRouteHandler()} />
         </Routes>
       </Router>
     </div>

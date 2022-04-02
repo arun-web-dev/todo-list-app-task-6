@@ -15,7 +15,7 @@ export default function Header() {
         <div>
           <button
             onClick={navigationHandler}
-            className="f5 flex items-center  dim br1 ba bw1 ph3 pv2  dib pointer purple "
+            className="f5 flex items-center   br1  bw1 ph3 pv2  dib pointer sign-out-btn "
           >
             <span className="f5 b mr2 pb1 dib ">+</span> Add New Todo
           </button>

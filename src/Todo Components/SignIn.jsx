@@ -9,7 +9,10 @@ export default function SignIn(props) {
     value: "",
   });
 
-  const { navigationHandler } = props;
+  useEffect(() => {
+    console.log(errorMessage.value);
+  });
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const { name, password } = account;
@@ -24,7 +27,7 @@ export default function SignIn(props) {
       password.toLocaleLowerCase() === "admin"
     ) {
       localStorage.setItem("authenticated", "true");
-      navigationHandler(false);
+      window.location.pathname = "/";
     } else {
       setErrorMessage((prevState) => ({
         value: "Invalid usename or password",

@@ -13,6 +13,7 @@ class NewTodo extends Component {
     title: this.title && "",
     details: this.details && "",
     assignTo: this.assignTo && "",
+    isLoaded: "true",
   };
 
   onchangeHandler = (e) => {
@@ -44,7 +45,7 @@ class NewTodo extends Component {
     const { title, details, assignTo, viewTodo } = this;
     return (
       <form
-        className="pa4 black-80 mw6 center mt3 shadow-1"
+        className="pa4 black-80 mw6 center mt3 shadow-1 new-todo new-todo-loaded"
         onSubmit={this.onSubmitHandler}
       >
         <div className="measure">
@@ -94,14 +95,14 @@ class NewTodo extends Component {
           </div>
           <div>
             {!viewTodo && (
-              <button className="f5  dim br1 ba bw1 ph3 pv2 mt3 dib pointer purple ">
+              <button className="f5 br1 ba bw1 ph3 pv2 mt3 dib pointer sign-out-btn">
                 Add
               </button>
             )}
 
             <button
               onClick={this.navigationHandler}
-              className="f5 dim br1 ba bw1 ph3 ml2 pv2 mt3 dib pointer purple "
+              className="f5  br1 ba bw1 ph3 ml2 pv2 mt3 dib pointer sign-out-btn"
             >
               Cancel
             </button>

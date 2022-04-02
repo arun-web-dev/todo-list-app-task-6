@@ -1,7 +1,7 @@
 export default function Navigation(props) {
-  const { navigationHandler } = props;
   const navigateToSign = (e) => {
-    navigationHandler(true);
+    localStorage.setItem("authenticated", "false");
+    window.location.pathname = "/";
   };
   return (
     <div className="flex justify-end mw7 mb2 center">

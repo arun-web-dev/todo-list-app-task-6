@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function TodoList(props) {
   const { todoLists, completedTodoHandler } = props;
-  const [showTodo, setShowTodo] = useState(false);
+  const [showTodo, setShowTodo] = useState("false");
   const naviagte = useNavigate();
   const todoHandler = (todo) => {
     naviagte("/newTodo", { state: { todo } });
@@ -14,7 +14,10 @@ export default function TodoList(props) {
   };
   const todoListsElement = todoLists.map((todo) => {
     return (
-      <div key={todo.id} className="flex items-center  mv1 pa2  bb b--black-10">
+      <div
+        key={todo.id}
+        className="flex items-center mv2 pa2 br3 bg-moon-gray bb b--black-10"
+      >
         <div>
           <input
             className="pointer"
@@ -53,7 +56,7 @@ export default function TodoList(props) {
         </div>
         <div
           className={
-            showTodo && todoLists.length > 0 && "todo-list todo-list-active"
+            todoLists.length > 0 && showTodo && "todo-list todo-list-active"
           }
         >
           {showTodo && todoListsElement}
