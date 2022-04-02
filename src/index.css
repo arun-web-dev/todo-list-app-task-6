@@ -13,6 +13,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: url("./cool-background.png");
+  background-size: cover;
 }
 
 code {
@@ -28,4 +30,53 @@ code {
   resize: vertical;
   overflow-y: visible;
   height: 50vh;
+}
+
+.sign-in-form {
+  margin-top: 10%;
+  max-width: 30%;
+}
+.sign-in-card {
+  background: #c9f3bd;
+}
+
+.sign-out-btn {
+  background-color: #6200ee;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  transition: all 0.3s;
+}
+
+.sign-out-btn:hover {
+  background-color: #6300eec4;
+  transform: translateY(-3px);
+}
+.sign-out-btn:active {
+  transform: translateY(1px);
+}
+
+@media only screen and (max-width: 728px) {
+  .sign-in-form {
+    max-width: 80%;
+  }
+}
+
+.todo-list {
+  max-height: 0px;
+  overflow: hidden;
+}
+
+.todo-list.todo-list-active {
+  max-height: 800px;
+  animation: load-in 1s ease-in;
+}
+
+@keyframes load-in {
+  0% {
+    max-height: 0px;
+  }
+  100% {
+    max-height: 700px;
+  }
 }
