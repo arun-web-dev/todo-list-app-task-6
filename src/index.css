@@ -120,3 +120,7 @@ code {
   transform: rotate(-15deg) scale(1.2);
   cursor: pointer;
 }
+
+.reset-btn {
+  max-width: 20%;
+}

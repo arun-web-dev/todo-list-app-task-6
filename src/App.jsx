@@ -12,7 +12,6 @@ import {
 import CompletedTodoList from "./Todo Components/CompletedTodoList";
 import Navigation from "./Todo Components/Navigation";
 import SignIn from "./Todo Components/SignIn";
-import ProtectedRoutes from "./Todo Components/ProtectedRoutes";
 
 function App() {
   const TODO_LISTS_STORAGE_KEY = "todoLists";

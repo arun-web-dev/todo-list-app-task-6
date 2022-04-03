@@ -42,6 +42,14 @@ export default function SignIn(props) {
       return { ...account, [name]: value };
     });
   };
+
+  const clearInputFields = (e) => {
+    e.preventDefault();
+    setAccount({
+      name: "",
+      password: "",
+    });
+  };
   return (
     <div className=" center sign-in-form ">
       <main className="pa4 br2 shadow-2 mw6 center black-80 mt3 sign-in-card ">
@@ -83,12 +91,19 @@ export default function SignIn(props) {
               />
             </div>
           </fieldset>
+
           <div className="">
             <input
               className="b ph3 pv2 input-reset sign-out-btn pointer f6 dib"
               type="submit"
               value="Sign in"
             />
+            <button
+              onClick={clearInputFields}
+              className="b ph3 ml2 tc pv2  sign-out-btn pointer reset-btn f6 dib"
+            >
+              Reset
+            </button>
           </div>
         </form>
       </main>

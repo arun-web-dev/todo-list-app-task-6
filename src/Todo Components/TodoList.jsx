@@ -42,7 +42,9 @@ export default function TodoList(props) {
     <section className="shadow-4 mt3 pa4 mw6 center ">
       <div>
         <div className="flex justify-between items-center">
-          <h2 className="f3">To-do List ({todoLists.length})</h2>
+          <h2 className="f3">
+            To-do List {todoLists.length > 0 ? `(${todoLists.length})` : ""}
+          </h2>
           {todoLists.length > 0 && (
             <i
               className={
