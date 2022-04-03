@@ -33,7 +33,7 @@ code {
 }
 
 .sign-in-form {
-  margin-top: 10%;
+  margin-top: 5%;
   max-width: 30%;
 }
 .sign-in-card {
@@ -123,4 +123,34 @@ code {
 
 .reset-btn {
   max-width: 100%;
+}
+
+.sign {
+  user-select: none;
+}
+
+.sign:hover {
+  color: #6200ee;
+  transition: color 0.3s;
+}
+.sign-active {
+  color: #6200ee;
+  user-select: none;
+  transition: color 0.3s;
+  text-decoration: underline;
+}
+
+.form-active {
+  animation: form-load 0.3s ease-in;
+}
+
+@keyframes form-load {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
