@@ -37,7 +37,7 @@ export default function CompletedTodoList(props) {
           className="trash-icon"
           onClick={() => deleteCompletedTodoHandler(todo.id)}
         >
-          <i class="fa-solid fa-trash-can"></i>
+          <i className="fa-solid fa-trash-can"></i>
         </div>
       </div>
     );

@@ -9,14 +9,9 @@ export default function SignIn(props) {
     value: "",
   });
 
-  useEffect(() => {
-    console.log(errorMessage.value);
-  });
-
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const { name, password } = account;
-    console.log(account);
     if (!name && !password) {
       setErrorMessage((prevState) => ({
         value: "username or password is empty",
