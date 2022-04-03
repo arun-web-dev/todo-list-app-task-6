@@ -38,7 +38,7 @@ function App() {
       COMPLETED_LISTS_STORAGE_KEY,
       JSON.stringify(completedTodo)
     );
-  }, [todoLists]);
+  }, [todoLists, completedTodo]);
 
   const toDosHandler = (todo) => {
     setTodoLists([...todoLists, { id: uuidV4(), todo }]);
@@ -53,7 +53,6 @@ function App() {
   };
 
   const deleteCompletedTodoHandler = (id) => {
-    console.log(id);
     const filteredTodo = completedTodo.filter((todo) => todo.id !== id);
     setCompletedTodo(filteredTodo);
   };
