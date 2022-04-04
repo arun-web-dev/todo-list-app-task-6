@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 
 export default function SignUp() {
   const [finalData, setFinalData] = useState([
