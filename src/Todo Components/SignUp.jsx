@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -24,6 +25,7 @@ export default function SignUp() {
         },
       },
     ]);
+
     localStorage.setItem("authenticated", "true");
     window.location.pathname = "/";
   };
