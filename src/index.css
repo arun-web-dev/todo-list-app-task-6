@@ -6,6 +6,24 @@
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+      217deg,
+      rgba(255, 0, 0, 0.445),
+      rgba(255, 0, 0, 0) 70.71%
+    ),
+    linear-gradient(127deg, rgba(0, 17, 255, 0.685), rgba(0, 255, 0, 0) 70.71%),
+    linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%);
+  border-radius: 2px;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  height: 30px;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -153,4 +171,19 @@ code {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #6200ee;
+  color: white;
+  border-radius: 50%;
+  outline: 3px solid #6300ee60;
+  user-select: none;
+  transition: filter 0.5s;
+}
+
+.user-icon:hover {
+  background-color: #6300eed8;
 }

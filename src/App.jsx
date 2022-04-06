@@ -3,21 +3,22 @@ import NewTodo from "./Todo Components/NewTodo";
 import { useState, useEffect } from "react";
 import TodoList from "./Todo Components/TodoList";
 import { v4 as uuidV4 } from "uuid";
-import {
-  Route,
-  BrowserRouter as Router,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import CompletedTodoList from "./Todo Components/CompletedTodoList";
 import Navigation from "./Todo Components/Navigation";
 import SignIn from "./Todo Components/SignIn";
+import { Users } from "./API/Users";
 
 function App() {
   const TODO_LISTS_STORAGE_KEY = "todoLists";
   const COMPLETED_LISTS_STORAGE_KEY = "completedTodos";
   const [todoLists, setTodoLists] = useState([]);
   const [completedTodo, setCompletedTodo] = useState([]);
+  const [filteredTodoLists, setfilteredTodoLists] = useState([]);
+  const [completedFilteredTodoLists, setcompletedFilteredTodoLists] = useState(
+    []
+  );
+  const [currentUser, setCurrentUser] = useState("");
 
   useEffect(() => {
     const storedTodoList = JSON.parse(
@@ -33,12 +34,29 @@ function App() {
   useEffect(() => {
     localStorage.setItem(TODO_LISTS_STORAGE_KEY, JSON.stringify(todoLists));
   }, [todoLists]);
+
   useEffect(() => {
     localStorage.setItem(
       COMPLETED_LISTS_STORAGE_KEY,
       JSON.stringify(completedTodo)
     );
   }, [todoLists, completedTodo]);
+
+  useEffect(() => {
+    const filterTodo = todoLists.filter((todo) => {
+      return todo.todo.assignTo.toLowerCase() === currentUser;
+    });
+
+    setfilteredTodoLists(filterTodo);
+  }, [currentUser, todoLists]);
+
+  useEffect(() => {
+    const filterTodo = completedTodo.filter((todo) => {
+      return todo.todo.assignTo.toLowerCase() === currentUser;
+    });
+
+    setcompletedFilteredTodoLists(filterTodo);
+  }, [currentUser, completedTodo]);
 
   const toDosHandler = (todo) => {
     setTodoLists([...todoLists, { id: uuidV4(), todo }]);
@@ -68,24 +86,36 @@ function App() {
     setIsSignedIn(value);
   };
 
+  const updateCurrentUser = (user) => {
+    setCurrentUser(user);
+  };
+
   const protectedRouteHandler = () => {
     const authenticated =
       localStorage.getItem("authenticated")?.toString() === "true";
     if (!authenticated) {
-      return <SignIn />;
+      return <SignIn users={Users} updateCurrentUser={updateCurrentUser} />;
     } else {
       return (
         <>
-          <Navigation navigationHandler={navigationHandler} />
-          <Header />
+          <Navigation
+            navigationHandler={navigationHandler}
+            currentUser={currentUser}
+          />
+          <Header currentUser={currentUser} />
           <TodoList
-            todoLists={todoLists}
+            todoLists={currentUser === "admin" ? todoLists : filteredTodoLists}
             completedTodoHandler={completedTodoHandler}
           />
           <CompletedTodoList
-            todoLists={completedTodo}
+            todoLists={
+              currentUser === "admin"
+                ? completedTodo
+                : completedFilteredTodoLists
+            }
             backToTodoListsHandler={backToTodoListsHandler}
             deleteCompletedTodoHandler={deleteCompletedTodoHandler}
+            currentUser={currentUser}
           />
         </>
       );
@@ -95,7 +125,7 @@ function App() {
     const authenticated =
       localStorage.getItem("authenticated")?.toString() === "true";
     if (!authenticated) {
-      return <SignIn />;
+      return <SignIn users={Users} updateCurrentUser={updateCurrentUser} />;
     } else {
       return <NewTodo toDosHandler={toDosHandler} />;
     }
@@ -105,7 +135,12 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/signin" element={<SignIn />} />
+          <Route
+            path="/signin"
+            element={
+              <SignIn users={Users} updateCurrentUser={updateCurrentUser} />
+            }
+          />
           <Route path="/" element={protectedRouteHandler()} />
           <Route path="/newTodo" element={newTodoRouteHandler()} />
         </Routes>

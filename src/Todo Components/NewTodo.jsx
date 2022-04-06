@@ -41,6 +41,13 @@ class NewTodo extends Component {
     this.navigate("/");
   };
 
+  selectOptionHandler = (e) => {
+    e.preventDefault();
+    this.setState({
+      assignTo: e.target.value,
+    });
+  };
+
   render() {
     const { title, details, assignTo, viewTodo } = this;
     return (
@@ -78,20 +85,32 @@ class NewTodo extends Component {
               disabled={viewTodo}
             ></textarea>
           </div>
-          <div>
-            <label htmlFor="title" className="f5 fw6 b db mb2">
-              Assign To
+          <div className="mt3 w-100 ">
+            <label htmlFor="assignTo" className="f5 b fw6 db mt3 mb2">
+              {viewTodo ? "Assigned To" : "Assign To"}
             </label>
-            <input
+            <select
               id="assignTo"
-              className="input-reset code ba b--black-20 pa2 mt1 mb2 db w-100"
-              type="text"
               name="assignTo"
-              value={assignTo}
-              placeholder="assign the task to"
-              onChange={this.onchangeHandler}
-              disabled={viewTodo}
-            />
+              className="w-100 pa2 bg-white black code"
+              defaultValue={assignTo ? assignTo : "Assign To"}
+              onChange={this.selectOptionHandler}
+            >
+              <option disabled>Assign To</option>
+              <option disabled={viewTodo} value="Arun" className="code f4 mv1">
+                Arun
+              </option>
+              <option disabled={viewTodo} value="Riyas" className="code f4 mv1">
+                Riyas
+              </option>
+              <option
+                disabled={viewTodo}
+                value="Sathish"
+                className="code f4 mv1"
+              >
+                Sathish
+              </option>
+            </select>
           </div>
           <div>
             {!viewTodo && (
@@ -102,7 +121,11 @@ class NewTodo extends Component {
 
             <button
               onClick={this.navigationHandler}
-              className="f5  br1 ba bw1 ph3 ml2 pv2 mt3 dib pointer sign-out-btn"
+              className={
+                viewTodo
+                  ? "f5  br1 ba bw1 ph3 pv2 mt3 dib pointer sign-out-btn"
+                  : "f5  br1 ba bw1 ph3 ml2 pv2 mt3 dib pointer sign-out-btn"
+              }
             >
               Cancel
             </button>

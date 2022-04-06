@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function CompletedTodoList(props) {
-  const { todoLists, backToTodoListsHandler, deleteCompletedTodoHandler } =
-    props;
+  const {
+    todoLists,
+    backToTodoListsHandler,
+    deleteCompletedTodoHandler,
+    currentUser,
+  } = props;
   const [showTodo, setShowTodo] = useState(false);
   const naviagte = useNavigate();
   const todoHandler = (todo) => {
@@ -33,12 +37,14 @@ export default function CompletedTodoList(props) {
             Assignee : {todo.todo.assignTo}
           </div>
         </div>
-        <div
-          className="trash-icon"
-          onClick={() => deleteCompletedTodoHandler(todo.id)}
-        >
-          <i className="fa-solid fa-trash-can"></i>
-        </div>
+        {currentUser === "admin" && (
+          <div
+            className="trash-icon"
+            onClick={() => deleteCompletedTodoHandler(todo.id)}
+          >
+            <i className="fa-solid fa-trash-can"></i>
+          </div>
+        )}
       </div>
     );
   });

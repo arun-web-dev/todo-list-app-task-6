@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import SignUp from "./SignUp";
 
 export default function SignIn(props) {
+  const { users, updateCurrentUser } = props;
+  const navigate = useNavigate();
   const [account, setAccount] = useState({
     name: "",
     password: "",
@@ -15,18 +19,21 @@ export default function SignIn(props) {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     const { name, password } = account;
+    const validateUser = () => {
+      return users.filter((user) => {
+        return user.name === name && user.password === password;
+      });
+    };
     if (!name && !password) {
-      setErrorMessage((prevState) => ({
+      setErrorMessage(() => ({
         value: "username or password is empty",
       }));
-    } else if (
-      name.toLocaleLowerCase() === "admin" &&
-      password.toLocaleLowerCase() === "admin"
-    ) {
+    } else if (validateUser().length > 0) {
+      updateCurrentUser(name);
       localStorage.setItem("authenticated", "true");
-      window.location.pathname = "/";
+      navigate("/");
     } else {
-      setErrorMessage((prevState) => ({
+      setErrorMessage(() => ({
         value: "Invalid usename or password",
       }));
       return;
@@ -34,7 +41,7 @@ export default function SignIn(props) {
   };
   const updateAccount = (e) => {
     const { name, value } = e.target;
-    setAccount((prevState) => {
+    setAccount(() => {
       return { ...account, [name]: value };
     });
   };

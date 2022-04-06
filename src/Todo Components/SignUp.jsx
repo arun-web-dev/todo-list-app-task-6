@@ -1,28 +1,32 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function SignUp() {
-  const [finalData, setFinalData] = useState([
-    {
-      details: {
-        username: "",
-        password: "",
-      },
-    },
+  const [users, setUsers] = useState([
+    { name: "admin", password: "password" },
+    { name: "Arun", password: "Arun" },
   ]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    setFinalData([
+    const details = {
+      name: data.Firstname + data.Lastname,
+      password: data.password,
+    };
+    const filteredUser = users.filter((user) => {
+      return user.name === details.name;
+    });
+    console.log(filteredUser);
+
+    setUsers([
+      ...users,
       {
-        details: {
-          username: data.Firstname + data.Lastname,
-          password: data.password,
-        },
+        name: data.Firstname + data.Lastname,
+        password: data.password,
       },
     ]);
 
