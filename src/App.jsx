@@ -8,6 +8,7 @@ import CompletedTodoList from "./Todo Components/CompletedTodoList";
 import Navigation from "./Todo Components/Navigation";
 import SignIn from "./Todo Components/SignIn";
 import { Users } from "./API/Users";
+import SearchBar from "./FETCH-CDN APP/SearchBar";
 
 function App() {
   const TODO_LISTS_STORAGE_KEY = "todoLists";
@@ -143,6 +144,7 @@ function App() {
           />
           <Route path="/" element={protectedRouteHandler()} />
           <Route path="/newTodo" element={newTodoRouteHandler()} />
+          <Route path = "/cdn" element = {<SearchBar />} />
         </Routes>
       </Router>
     </div>

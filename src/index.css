@@ -187,3 +187,23 @@ code {
 .user-icon:hover {
   background-color: #6300eed8;
 }
+
+.cdn-search-bar {
+  border-radius: 100px;
+}
+
+.cdn-search-form {
+  position: relative;
+}
+
+.cdn-search-icon {
+  position: absolute;
+  left: 20px;
+  top: 22px;
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+input#search {
+  border: 1px solid rgba(0, 0, 0, 0.664);
+}
